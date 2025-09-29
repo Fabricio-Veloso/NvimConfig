@@ -76,6 +76,7 @@ require('lazy').setup {
   require 'plugins.neogit',
   require 'plugins.autopairs',
   require 'plugins.typescript-tools',
+  require 'plugins.dap',
 }
 
 -- Tema Moonfly
