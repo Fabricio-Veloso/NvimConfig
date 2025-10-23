@@ -79,6 +79,7 @@ require('lazy').setup {
   require 'plugins.dap',
   require 'plugins.fire-nvim',
   require 'plugins.here-rocks',
+  require 'plugins.lf',
 }
 
 -- Tema Moonfly
