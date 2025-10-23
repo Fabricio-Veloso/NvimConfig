@@ -80,6 +80,7 @@ require('lazy').setup {
   require 'plugins.fire-nvim',
   require 'plugins.here-rocks',
   require 'plugins.lf',
+  require 'plugins.lsp-signature',
 }
 
 -- Tema Moonfly
