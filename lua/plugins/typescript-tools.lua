@@ -25,7 +25,7 @@ return {
       },
       tsserver_format_options = {
         allowIncompleteCompletions = false,
-        allowRenameOfImportPath = false,
+        allowRenameOFImportPath = true,
       },
     },
   },
