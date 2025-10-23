@@ -77,6 +77,7 @@ require('lazy').setup {
   require 'plugins.autopairs',
   require 'plugins.typescript-tools',
   require 'plugins.dap',
+  require 'plugins.fire-nvim',
 }
 
 -- Tema Moonfly
