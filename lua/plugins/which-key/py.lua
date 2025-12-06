@@ -1,12 +1,10 @@
 local M = {}
 
--- cache para o diretório do manage.py e virtualenv
 local py_cache = {
   manage_dir = nil,
-  venv_activate = nil,
+
 }
 
--- função para abrir terminal e executar comando no diretório correto
 local function run_command(cmd, dir)
   if dir then
     -- se houver virtualenv, adiciona o source antes do comando
@@ -27,7 +25,6 @@ local function run_command(cmd, dir)
   end
 end
 
--- Função para procurar o root do projeto
 local function get_project_root()
   local cwd = vim.fn.getcwd()
   -- tenta pegar o root do git se houver
@@ -38,7 +35,6 @@ local function get_project_root()
   return cwd
 end
 
--- Função para encontrar o manage.py e cachear o diretório
 local function get_manage_py_dir()
   if py_cache.manage_dir and vim.fn.filereadable(py_cache.manage_dir .. "/manage.py") == 1 then
     return py_cache.manage_dir
@@ -55,7 +51,6 @@ local function get_manage_py_dir()
   return dir
 end
 
--- Função para detectar virtualenv no projeto
 local function detect_venv()
   local dir = get_project_root()
   local venv_dirs = { ".venv", "venv" }
@@ -73,7 +68,6 @@ local function detect_venv()
   return nil
 end
 
--- função helper para executar comandos Django
 local function run_django(cmd)
   local dir = get_manage_py_dir()
   if not dir then
