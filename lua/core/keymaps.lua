@@ -10,7 +10,9 @@ local opts = { noremap = true, silent = true }
 -- save file
 vim.keymap.set('n', '<M-s>', '<cmd> w <CR>', opts)
 
-vim.keymap.set('n', '<C-q>', '<cmd> Ex <CR>', opts)
+-- alt + q goes to Ex mode
+vim.keymap.set('n', '<M-q>', '<cmd> Ex <CR>', opts)
+
 
 -- Resize with arrows
 vim.keymap.set('n', '<Up>', ':resize -2<CR>', opts)
