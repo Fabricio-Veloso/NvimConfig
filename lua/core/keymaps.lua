@@ -61,3 +61,12 @@ vim.keymap.set('o', 'ç', 'l', { noremap = true, silent = true })
 
 -- to travel to active buffer directory
 vim.keymap.set('n', '<leader>f', ':Neotree reveal<CR>')
+
+-- Fecha o buffer atual e vai para o próximo
+vim.keymap.set("n", "<A-d>", function()
+  -- tenta ir para o próximo buffer
+  vim.cmd("bnext")
+  -- fecha o anterior (que era o atual antes do bnext)
+  vim.cmd("bd #")
+end, { desc = "Fechar buffer atual rapidamente" })
+
