@@ -1,3 +1,6 @@
+ -- Make Line Numbers
+vim.wo.number = true 
+
 -- Make relative line numbers
 vim.opt.relativenumber = true
 
