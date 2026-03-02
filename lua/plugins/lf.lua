@@ -7,7 +7,7 @@ return {
     -- Corrige o mapeamento: remove qualquer <leader>f criado pelo LF
     vim.schedule(function()
       pcall(vim.keymap.del, 'n', '<leader>f')  -- apaga o que o LF criou
-      map('n', '<leader>f', ':Neotree reveal<CR>', { desc = "Abrir Neo-tree no arquivo atual" })
+      map('n', '<leader>lf', ':Neotree reveal<CR>', { desc = "Abrir Neo-tree no arquivo atual" })
     end)
 
     -- Mapeamento separado para abrir o LF manualmente
