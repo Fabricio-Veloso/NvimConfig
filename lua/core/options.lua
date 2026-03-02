@@ -1,3 +1,6 @@
+-- Show which line your cursor is on
+vim.opt.cursorline = true
+
 -- Save undo history
 vim.opt.undofile = true
 
