@@ -13,6 +13,12 @@ vim.keymap.set('n', '<M-s>', '<cmd> w! <CR>', opts)
 -- alt + q exit's 
 vim.keymap.set('n', '<M-q>', '<cmd> q <CR>', opts)
 
+-- alt + q exit's
+vim.keymap.set('n', '<M-q>', '<cmd> quitall <CR>', opts)
+
+-- Find and center
+vim.keymap.set('n', 'n', 'nzzzv', opts)
+vim.keymap.set('n', 'N', 'Nzzzv', opts)
 
 -- Resize with arrows
 vim.keymap.set('n', '<Up>', ':resize -2<CR>', opts)
