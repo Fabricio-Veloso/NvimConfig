@@ -22,7 +22,7 @@ vim.keymap.set('n', '<Right>', ':vertical resize +2<CR>', opts)
 
 -- navegate between splits
 vim.keymap.set('n', '<C-j>', '<C-w>h', opts) -- Ir para o split à esquerda
-vim.keymap.set('n', '<C-k>', '<C-w>k', opts) -- Ir para o split acima
+vim.keymap.set('n', '<C-l>', '<C-w>k', opts) -- Ir para o split acima
 vim.keymap.set('n', '<C-k>', '<C-w>j', opts) -- Ir para o split abaixo
 vim.keymap.set('n', '<C-]>', '<C-w>l', opts) -- Ir para o split à direita
 
