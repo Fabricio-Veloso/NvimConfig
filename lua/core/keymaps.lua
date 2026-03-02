@@ -65,9 +65,32 @@ vim.keymap.set('n', '<leader>f', ':Neotree reveal<CR>')
 
 -- Fecha o buffer atual e vai para o próximo
 vim.keymap.set("n", "<A-d>", function()
-  -- tenta ir para o próximo buffer
-  vim.cmd("bnext")
-  -- fecha o anterior (que era o atual antes do bnext)
-  vim.cmd("bd #")
+  local buffers = vim.fn.getbufinfo({ buflisted = 1 })
+
+  if #buffers > 1 then
+    -- Caso com mais de um buffer
+    vim.cmd("wa")       -- Salva todos
+    vim.cmd("bnext")    -- Vai para o próximo
+    vim.cmd("bd #")     -- Fecha o anterior
+  else
+    -- Caso com apenas um buffer
+    vim.cmd("wa")       -- Salva alterações
+    local current_buf = vim.api.nvim_get_current_buf()
+
+    vim.cmd("enew")     -- Cria um novo buffer vazio
+    local new_buf = vim.api.nvim_get_current_buf()
+
+    -- Deleta o antigo buffer
+    if current_buf ~= new_buf then
+      vim.api.nvim_buf_delete(current_buf, { force = true })
+    end
+
+    -- Foca no Neotree se disponível
+    if pcall(vim.cmd, "Neotree reveal") then
+      -- Se o Neotree estiver instalado, abre ou foca
+    else
+      vim.notify("Neo-tree não disponível.", vim.log.levels.INFO)
+    end
+  end
 end, { desc = "Fechar buffer atual rapidamente" })
 
