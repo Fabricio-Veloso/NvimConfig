@@ -20,11 +20,11 @@ vim.keymap.set('n', '<Down>', ':resize +2<CR>', opts)
 vim.keymap.set('n', '<Left>', ':vertical resize -2<CR>', opts)
 vim.keymap.set('n', '<Right>', ':vertical resize +2<CR>', opts)
 
--- Navigate between splits
-vim.keymap.set('n', '<C-k>', ':wincmd k<CR>', opts)
-vim.keymap.set('n', '<C-j>', ':wincmd j<CR>', opts)
-vim.keymap.set('n', '<C-h>', ':wincmd h<CR>', opts)
-vim.keymap.set('n', '<C-l>', ':wincmd l<CR>', opts)
+-- navegate between splits
+vim.keymap.set('n', '<C-j>', '<C-w>h', opts) -- Ir para o split à esquerda
+vim.keymap.set('n', '<C-k>', '<C-w>k', opts) -- Ir para o split acima
+vim.keymap.set('n', '<C-k>', '<C-w>j', opts) -- Ir para o split abaixo
+vim.keymap.set('n', '<C-]>', '<C-w>l', opts) -- Ir para o split à direita
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
@@ -33,5 +33,28 @@ vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Open float
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
 -- Go from the insetmode to normal mode with jj
-vim.keymap.set('i', 'jj', '<Esc>', { noremap = true, silent = true })
+vim.keymap.set('i', 'kk', '<Esc>', { noremap = true, silent = true })
+--vim.keymap.set('i', '<CapsLock>', '<Esc>', { noremap = true, silent = true })
 vim.keymap.set('n', '<M-c>', ':', { noremap = true, silent = false })
+
+-- Alt + . para o próximo buffer
+vim.keymap.set('n', '<A-.>', ':bnext<CR>', { noremap = true, silent = true })
+
+-- Alt + , para o buffer anterior
+vim.keymap.set('n', '<A-,>', ':bprevious<CR>', { noremap = true, silent = true })
+
+-- Reamps for ABNT 2 60% keyboard
+vim.keymap.set('n', 'j', 'h', { noremap = true, silent = true })
+vim.keymap.set('n', 'k', 'j', { noremap = true, silent = true })
+vim.keymap.set('n', 'l', 'k', { noremap = true, silent = true })
+vim.keymap.set('n', 'ç', 'l', { noremap = true, silent = true })
+
+vim.keymap.set('v', 'j', 'h', { noremap = true, silent = true })
+vim.keymap.set('v', 'k', 'j', { noremap = true, silent = true })
+vim.keymap.set('v', 'l', 'k', { noremap = true, silent = true })
+vim.keymap.set('v', 'ç', 'l', { noremap = true, silent = true })
+
+vim.keymap.set('o', 'j', 'h', { noremap = true, silent = true })
+vim.keymap.set('o', 'k', 'j', { noremap = true, silent = true })
+vim.keymap.set('o', 'l', 'k', { noremap = true, silent = true })
+vim.keymap.set('o', 'ç', 'l', { noremap = true, silent = true })
