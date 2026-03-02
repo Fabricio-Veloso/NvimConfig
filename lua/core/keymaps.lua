@@ -32,8 +32,9 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnos
 vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
--- Go from the insetmode to normal mode with jj
-vim.keymap.set('i', 'kk', '<Esc>', { noremap = true, silent = true })
+-- Mapear Shift+K (ou seja, K maiúsculo) para <Esc> no modo inserção
+vim.keymap.set('i', 'K', '<Esc>', { noremap = true, silent = true })
+
 --vim.keymap.set('i', '<CapsLock>', '<Esc>', { noremap = true, silent = true })
 vim.keymap.set('n', '<M-c>', ':', { noremap = true, silent = false })
 
