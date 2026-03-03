@@ -58,3 +58,6 @@ vim.keymap.set('o', 'j', 'h', { noremap = true, silent = true })
 vim.keymap.set('o', 'k', 'j', { noremap = true, silent = true })
 vim.keymap.set('o', 'l', 'k', { noremap = true, silent = true })
 vim.keymap.set('o', 'ç', 'l', { noremap = true, silent = true })
+
+-- to travel to active buffer directory
+vim.keymap.set('n', '<leader>f', ':Neotree reveal<CR>')
