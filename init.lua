@@ -66,6 +66,7 @@ require('lazy').setup {
   require 'plugins.telescope',
   require 'plugins.nerdy',
   require 'plugins.moonfly',
+  require 'plugins.lualine',
 }
 
 -- Tema Moonfly
