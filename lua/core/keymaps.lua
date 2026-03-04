@@ -8,7 +8,7 @@ vim.g.maplocalleader = ' '
 local opts = { noremap = true, silent = true }
 
 -- save file
-vim.keymap.set('n', '<C-s>', '<cmd> w <CR>', opts)
+vim.keymap.set('n', '<M-s>', '<cmd> w <CR>', opts)
 
 vim.keymap.set('n', '<C-q>', '<cmd> Ex <CR>', opts)
 
