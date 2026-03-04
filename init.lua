@@ -71,6 +71,7 @@ require('lazy').setup {
   require 'plugins.autocompletion',
   require 'plugins.alpha',
   require 'plugins.indent-blankLine',
+  require 'plugins.comment',
 }
 
 -- Tema Moonfly
