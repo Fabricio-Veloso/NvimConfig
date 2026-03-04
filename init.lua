@@ -69,6 +69,7 @@ require('lazy').setup {
   require 'plugins.lualine',
   require 'plugins.lsp',
   require 'plugins.autocompletion',
+  require 'plugins.alpha',
 }
 
 -- Tema Moonfly
