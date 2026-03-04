@@ -34,3 +34,4 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 
 -- Go from the insetmode to normal mode with jj
 vim.keymap.set('i', 'jj', '<Esc>', { noremap = true, silent = true })
+vim.keymap.set('n', '<M-c>', ':', { noremap = true, silent = false })
