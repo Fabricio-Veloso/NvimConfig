@@ -72,6 +72,7 @@ require('lazy').setup {
   require 'plugins.alpha',
   require 'plugins.indent-blankLine',
   require 'plugins.comment',
+  require 'plugins.which-key',
 }
 
 -- Tema Moonfly
