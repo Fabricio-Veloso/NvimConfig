@@ -74,6 +74,7 @@ require('lazy').setup {
   require 'plugins.comment',
   require 'plugins.which-key',
   require 'plugins.neogit',
+  require 'plugins.autopairs',
 }
 
 -- Tema Moonfly
