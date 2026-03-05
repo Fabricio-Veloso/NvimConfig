@@ -68,3 +68,8 @@ require('lazy').setup {
 vim.opt.termguicolors = true
 vim.cmd [[colorscheme moonfly]]
 
+-- Automations
+
+-- activate snipets
+require('luasnip.loaders.from_vscode').lazy_load()
+
