@@ -89,3 +89,8 @@ vim.api.nvim_create_autocmd('BufReadPost', {
   end,
 })
 
+-- Remove opacidade do Neovim
+vim.cmd [[
+hi Normal guibg=NONE ctermbg=NONE
+hi NonText guibg=NONE ctermbg=NONE
+]]
