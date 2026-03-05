@@ -59,3 +59,7 @@ vim.g.clipboard = {
   cache_enabled = 0,
 }
 vim.opt.clipboard:prepend { 'unnamed', 'unnamedplus' }
+
+-- Lazy.nvim plugins
+require('lazy').setup {
+}
