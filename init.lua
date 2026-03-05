@@ -90,6 +90,7 @@ require('lazy').setup {
   require 'plugins.friendly-snipets',
   require 'plugins.autoformatting',
 }
+require 'make'
 
 -- Tema Moonfly
 vim.opt.termguicolors = true
