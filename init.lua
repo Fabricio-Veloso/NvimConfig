@@ -6,3 +6,38 @@ vim.opt.spelllang = { 'en_us' }
 
 local uname = vim.loop.os_uname().sysname
 
+if uname == 'Windows_NT' then
+  local shell = nil
+
+  -- Detecta PowerShell 7+ (pwsh) ou fallback para PowerShell 5.1
+  if vim.fn.executable 'pwsh' == 1 then
+    shell = 'pwsh'
+  elseif vim.fn.executable 'powershell' == 1 then
+    shell = 'powershell'
+  else
+    shell = 'cmd'
+  end
+
+  vim.o.shell = shell
+
+  -- shellcmdflag mínimo e seguro
+  vim.o.shellcmdflag = '-NoLogo -NonInteractive -ExecutionPolicy RemoteSigned -Command'
+
+  -- redirecionamento de saída e pipe padrão
+  vim.o.shellredir = '2>&1 | Out-File %s; exit $LastExitCode'
+  vim.o.shellpipe = '2>&1 | tee %s; exit $LastExitCode'
+
+  -- evita problemas de aspas
+  vim.o.shellquote = ''
+  vim.o.shellxquote = ''
+end
+
+-- NOTE: lazy.nvim set-up
+local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
+  local out = vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
+  if vim.v.shell_error ~= 0 then
+    error('Error cloning lazy.nvim:\n' .. out)
+  end
+end
