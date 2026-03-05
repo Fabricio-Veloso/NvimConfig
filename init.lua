@@ -62,6 +62,7 @@ vim.opt.clipboard:prepend { 'unnamed', 'unnamedplus' }
 
 -- Lazy.nvim plugins
 require('lazy').setup {
+  require 'plugins.neotree',
 }
 
 -- Tema Moonfly
