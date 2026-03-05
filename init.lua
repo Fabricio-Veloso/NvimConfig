@@ -45,3 +45,17 @@ end
 ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
+-- Clipboard integration
+vim.g.clipboard = {
+  name = 'win32yank-wsl',
+  copy = {
+    ['+'] = 'win32yank.exe -i',
+    ['*'] = 'win32yank.exe -i',
+  },
+  paste = {
+    ['+'] = 'win32yank.exe -o',
+    ['*'] = 'win32yank.exe -o',
+  },
+  cache_enabled = 0,
+}
+vim.opt.clipboard:prepend { 'unnamed', 'unnamedplus' }
