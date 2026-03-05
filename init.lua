@@ -73,3 +73,19 @@ vim.cmd [[colorscheme moonfly]]
 -- activate snipets
 require('luasnip.loaders.from_vscode').lazy_load()
 
+-- Folding com Treesitter
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldtext = 'getline(v:foldstart)'
+vim.opt.fillchars = { fold = ' ' }
+
+-- Fecha todos os folds ao abrir arquivo
+vim.api.nvim_create_autocmd('BufReadPost', {
+  pattern = '*',
+  callback = function()
+    vim.schedule(function()
+      vim.cmd 'normal! zM'
+    end)
+  end,
+})
+
