@@ -85,6 +85,7 @@ require('lazy').setup {
   require 'plugins.auto-session',
   require 'plugins.lazy-dev',
   require 'plugins.treesitter',
+  require 'plugins.markdown-preview',
 }
 
 -- Tema Moonfly
