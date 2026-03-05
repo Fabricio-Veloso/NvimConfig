@@ -84,6 +84,7 @@ require('lazy').setup {
   require 'plugins.telescope-fzf-native',
   require 'plugins.auto-session',
   require 'plugins.lazy-dev',
+  require 'plugins.treesitter',
 }
 
 -- Tema Moonfly
