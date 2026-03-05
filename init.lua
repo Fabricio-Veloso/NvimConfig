@@ -87,6 +87,7 @@ require('lazy').setup {
   require 'plugins.treesitter',
   require 'plugins.markdown-preview',
   require 'plugins.notify-nvim',
+  require 'plugins.friendly-snipets',
 }
 
 -- Tema Moonfly
