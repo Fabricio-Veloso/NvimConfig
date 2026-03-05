@@ -63,3 +63,8 @@ vim.opt.clipboard:prepend { 'unnamed', 'unnamedplus' }
 -- Lazy.nvim plugins
 require('lazy').setup {
 }
+
+-- Tema Moonfly
+vim.opt.termguicolors = true
+vim.cmd [[colorscheme moonfly]]
+
