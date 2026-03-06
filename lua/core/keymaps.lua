@@ -100,3 +100,6 @@ vim.keymap.set("n", "<A-d>", function()
   end
 end, { desc = "Fechar buffer atual rapidamente" })
 
+-- keymap para sair do modo terminal mais facilmente.
+vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { silent = true })
+
