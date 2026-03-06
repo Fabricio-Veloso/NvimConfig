@@ -106,3 +106,5 @@ vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { silent = true })
 --keymap to open Neogit.
 vim.keymap.set('n','<leader>g',':Neogit<CR>',{desc = 'Open Neogit'})
 
+--keymap to open terminal.
+vim.keymap.set('n','<leader>t',':terminal<CR>a',{desc = 'Open terminal'})
