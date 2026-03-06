@@ -23,36 +23,48 @@ return { -- Fuzzy Finder (files, lsp, etc)
     { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
   },
   config = function()
-    -- Telescope is a fuzzy finder that comes with a lot of different things that
-    -- it can fuzzy find! It's more than just a "file finder", it can search
-    -- many different aspects of Neovim, your workspace, LSP, and more!
-    --
-    -- The easiest way to use Telescope, is to start by doing something like:
-    --  :Telescope help_tags
-    --
-    -- After running this command, a window will open up and you're able to
-    -- type in the prompt window. You'll see a list of `help_tags` options and
-    -- a corresponding preview of the help.
-    --
-    -- Two important keymaps to use while in Telescope are:
-    --  - Insert mode: <c-/>
-    --  - Normal mode: ?
-    --
-    -- This opens a window that shows you all of the keymaps for the current
-    -- Telescope picker. This is really useful to discover what Telescope can
-    -- do as well as how to actually do it!
+    -- ✨ 1. Função para pegar o root atual do Neo-tree (ou o cwd)
+    local function get_neotree_root()
+      -- tenta obter o estado do neo-tree, mas sem depender dele estar ativo
+      local ok, fs = pcall(require, 'neo-tree.sources.filesystem')
+      if ok then
+        local state_ok, state = pcall(fs.get_state)
+        if state_ok and state and state.path and state.path ~= '' then
+          return state.path
+        end
+      end
 
-    -- [[ Configure Telescope ]]
-    -- See `:help telescope` and `:help telescope.setup()`
+      -- fallback sempre válido
+      return vim.loop.cwd()
+    end
+
+    -- ✨ 2. Função usada pelo Telescope para exibir paths relativos ao root
+    local function relative_path_display(_, path)
+      local root = get_neotree_root()
+      if not root or root == '' then
+        root = vim.loop.cwd()
+      end
+
+      -- usa o caminho relativo ao cwd como base
+      local rel = vim.fn.fnamemodify(path, ':.')
+
+      -- remove o prefixo do root real (neotree ou cwd)
+      rel = rel:gsub('^' .. vim.pesc(root) .. '/', '')
+
+      return rel
+    end
+
     require('telescope').setup {
       -- You can put your default mappings / updates / etc. in here
       --  All the info you're looking for is in `:help telescope.setup()`
       --
-      -- defaults = {
+      defaults = {
+        path_display = relative_path_display,
+      },
       mappings = {
-        ['K'] = require('telescope.actions').move_selection_previous, -- move to prev result
-        ['J'] = require('telescope.actions').move_selection_next,     -- move to next result
-        ['l'] = require('telescope.actions').select_default,          -- open file
+        ['L'] = require('telescope.actions').move_selection_previous, -- move to prev result
+        ['K'] = require('telescope.actions').move_selection_next,     -- move to next result
+        ['Ç'] = require('telescope.actions').select_default,          -- open file
       },
       -- },
       -- pickers = {}
@@ -78,11 +90,12 @@ return { -- Fuzzy Finder (files, lsp, etc)
     vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
     vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
     vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-    vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+    vim.keymap.set('n', '<leader>f', builtin.buffers, { desc = '[ ] Find existing buffers' })
     vim.keymap.set('n', '<leader>sgg', function()
+      local home = vim.fn.expand '~' -- pega a home do usuário corretamente no Windows e Linux
       require('telescope.builtin').find_files {
         prompt_title = '📘 Meu Glossário Neovim',
-        search_dirs = { '~/.config/nvim/gloss' },
+        search_dirs = { home .. '/AppData/Local/nvim/Glossary' },
       }
     end, { desc = '[S]earch [G]lossário' })
 
