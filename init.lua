@@ -88,7 +88,7 @@ require('lazy').setup {
   require 'plugins.markdown-preview',
   require 'plugins.notify-nvim',
   require 'plugins.friendly-snipets',
-  require 'plugins.autoformatting',
+  -- require 'plugins.autoformatting',
 }
 require 'make'
 
