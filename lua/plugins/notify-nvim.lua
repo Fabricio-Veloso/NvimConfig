@@ -3,8 +3,7 @@ return{
   config = function()
     local notify = require("notify")
     notify.setup({
-      -- Aqui você pode colocar configs personalizadas
-      -- exemplo: background_colour = "#000000",
+      background_colour = "#000000",
     })
 
     -- opcional: substituir o sistema de notify padrão do Neovim
