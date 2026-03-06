@@ -103,3 +103,6 @@ end, { desc = "Fechar buffer atual rapidamente" })
 -- keymap para sair do modo terminal mais facilmente.
 vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { silent = true })
 
+--keymap to open Neogit.
+vim.keymap.set('n','<leader>g',':Neogit<CR>',{desc = 'Open Neogit'})
+
