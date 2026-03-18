@@ -133,3 +133,8 @@ vim.keymap.set('n','<leader>g',':Neogit<CR>',{desc = 'Open Neogit'})
 
 --keymap to open terminal.
 vim.keymap.set('n','<leader>t',':terminal<CR>a',{desc = 'Open terminal'})
+
+--keymap para make inteligente.
+vim.keymap.set("n", "<leader>mc", function()
+	require("make").exec()
+end, { desc = "Executar Make inteligente" })
