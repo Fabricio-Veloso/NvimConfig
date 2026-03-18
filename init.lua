@@ -91,6 +91,7 @@ require('lazy').setup {
   -- require 'plugins.autoformatting',
 }
 require 'make'
+	require("plugins.open-code"),
 
 -- Tema Moonfly
 vim.opt.termguicolors = true
