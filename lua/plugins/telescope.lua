@@ -23,6 +23,9 @@ return { -- Fuzzy Finder (files, lsp, etc)
     { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
   },
   config = function()
+    local actions = require 'telescope.actions'
+    local action_state = require 'telescope.actions.state'
+
     -- ✨ 1. Função para pegar o root atual do Neo-tree (ou o cwd)
     local function get_neotree_root()
       -- tenta obter o estado do neo-tree, mas sem depender dele estar ativo
@@ -54,20 +57,125 @@ return { -- Fuzzy Finder (files, lsp, etc)
       return rel
     end
 
+    local function get_buffer_label(bufnr)
+      local name = vim.api.nvim_buf_get_name(bufnr)
+      if name == '' then
+        return string.format('[No Name] (%d)', bufnr)
+      end
+
+      return vim.fn.fnamemodify(name, ':~:.')
+    end
+
+    local function close_buffer(bufnr)
+      if not vim.api.nvim_buf_is_valid(bufnr) then
+        return true
+      end
+
+      if not vim.api.nvim_buf_get_option(bufnr, 'modified') then
+        local ok, err = pcall(vim.api.nvim_buf_delete, bufnr, { force = false })
+        if not ok then
+          vim.notify(string.format('Erro ao fechar %s: %s', get_buffer_label(bufnr), err), vim.log.levels.ERROR)
+        end
+        return ok
+      end
+
+      local choice = vim.fn.confirm(
+        string.format('O buffer %s tem alteracoes nao salvas. O que deseja fazer?', get_buffer_label(bufnr)),
+        '&Salvar\n&Descartar\n&Cancelar',
+        1
+      )
+
+      if choice == 0 or choice == 3 then
+        return false, 'cancelled'
+      end
+
+      if choice == 1 then
+        local checked, check_err = pcall(vim.api.nvim_buf_call, bufnr, function()
+          vim.cmd 'silent! checktime'
+        end)
+
+        if not checked then
+          vim.notify(string.format('Erro ao verificar %s: %s', get_buffer_label(bufnr), check_err), vim.log.levels.ERROR)
+          return false
+        end
+
+        local saved, save_err = pcall(vim.api.nvim_buf_call, bufnr, function()
+          vim.cmd 'write'
+        end)
+
+        if not saved then
+          vim.notify(string.format('Erro ao salvar %s: %s', get_buffer_label(bufnr), save_err), vim.log.levels.ERROR)
+          return false
+        end
+
+        local closed, close_err = pcall(vim.api.nvim_buf_delete, bufnr, { force = false })
+        if not closed then
+          vim.notify(string.format('Erro ao fechar %s: %s', get_buffer_label(bufnr), close_err), vim.log.levels.ERROR)
+        end
+        return closed
+      end
+
+      local ok, err = pcall(vim.api.nvim_buf_delete, bufnr, { force = true })
+      if not ok then
+        vim.notify(string.format('Erro ao descartar %s: %s', get_buffer_label(bufnr), err), vim.log.levels.ERROR)
+      end
+      return ok
+    end
+
+    local function delete_selected_buffers(prompt_bufnr)
+      local picker = action_state.get_current_picker(prompt_bufnr)
+      local seen = {}
+
+      picker:delete_selection(function(entry)
+        if not entry or not entry.bufnr then
+          return false
+        end
+
+        if seen[entry.bufnr] then
+          return true
+        end
+        seen[entry.bufnr] = true
+
+        local ok, reason = close_buffer(entry.bufnr)
+        if not ok and reason == 'cancelled' then
+          return false
+        end
+
+        return ok
+      end)
+    end
+
     require('telescope').setup {
       -- You can put your default mappings / updates / etc. in here
       --  All the info you're looking for is in `:help telescope.setup()`
       --
       defaults = {
         path_display = relative_path_display,
+        mappings = {
+          i = {
+            ['L'] = actions.move_selection_previous,
+            ['K'] = actions.move_selection_next,
+            ['Ç'] = actions.select_default,
+          },
+          n = {
+            ['L'] = actions.move_selection_previous,
+            ['K'] = actions.move_selection_next,
+            ['Ç'] = actions.select_default,
+          },
+        },
       },
-      mappings = {
-        ['L'] = require('telescope.actions').move_selection_previous, -- move to prev result
-        ['K'] = require('telescope.actions').move_selection_next,     -- move to next result
-        ['Ç'] = require('telescope.actions').select_default,          -- open file
+      pickers = {
+        buffers = {
+          mappings = {
+            i = {
+              ['<C-x>'] = delete_selected_buffers,
+            },
+            n = {
+              ['<C-x>'] = delete_selected_buffers,
+            },
+          },
+        },
       },
-      -- },
-      -- pickers = {}
       extensions = {
         ['ui-select'] = {
           require('telescope.themes').get_dropdown(),
