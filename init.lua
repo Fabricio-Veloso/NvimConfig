@@ -46,18 +46,71 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- Clipboard integration
-vim.g.clipboard = {
-	name = "win32yank-wsl",
-	copy = {
-		["+"] = "win32yank.exe -i",
-		["*"] = "win32yank.exe -i",
-	},
-	paste = {
-		["+"] = "win32yank.exe -o",
-		["*"] = "win32yank.exe -o",
-	},
-	cache_enabled = 0,
-}
+local function is_wsl()
+	local f = io.open("/proc/version", "r")
+	if f then
+		local content = f:read("*a")
+		f:close()
+		return content:lower():find("microsoft") ~= nil
+	end
+	return false
+end
+
+if uname == "Windows_NT" or is_wsl() then
+	vim.g.clipboard = {
+		name = "win32yank-wsl",
+		copy = {
+			["+"] = "win32yank.exe -i",
+			["*"] = "win32yank.exe -i",
+		},
+		paste = {
+			["+"] = "win32yank.exe -o",
+			["*"] = "win32yank.exe -o",
+		},
+		cache_enabled = 0,
+	}
+elseif uname == "Linux" then
+	if vim.fn.executable("wl-copy") == 1 then
+		vim.g.clipboard = {
+			name = "wl-clipboard",
+			copy = {
+				["+"] = "wl-copy",
+				["*"] = "wl-copy --primary",
+			},
+			paste = {
+				["+"] = "wl-paste --no-newline",
+				["*"] = "wl-paste --no-newline --primary",
+			},
+			cache_enabled = 0,
+		}
+	elseif vim.fn.executable("xclip") == 1 then
+		vim.g.clipboard = {
+			name = "xclip",
+			copy = {
+				["+"] = "xclip -selection clipboard",
+				["*"] = "xclip -selection primary",
+			},
+			paste = {
+				["+"] = "xclip -selection clipboard -o",
+				["*"] = "xclip -selection primary -o",
+			},
+			cache_enabled = 0,
+		}
+	elseif vim.fn.executable("xsel") == 1 then
+		vim.g.clipboard = {
+			name = "xsel",
+			copy = {
+				["+"] = "xsel --clipboard --input",
+				["*"] = "xsel --primary --input",
+			},
+			paste = {
+				["+"] = "xsel --clipboard --output",
+				["*"] = "xsel --primary --output",
+			},
+			cache_enabled = 0,
+		}
+	end
+end
 vim.opt.clipboard:prepend({ "unnamed", "unnamedplus" })
 
 -- Lazy.nvim plugins
